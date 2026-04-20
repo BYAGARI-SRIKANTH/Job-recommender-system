@@ -86,18 +86,38 @@ if uploaded_file:
             with st.spinner("Fetching jobs from LinkedIn and Naukri..."):
                 linkedin_jobs = fetch_linkedin_jobs(search_keywords, location=preferred_location, rows=60)
                 naukri_jobs = fetch_naukri_jobs(search_keywords, location=preferred_location, rows=60)
-            
+
     st.markdown("---")
     st.header("Top LinkedIn Jobs")
-    
-    if linkedin_jobs:
-        for job in linkedin_jobs:
+
+    if linkedin_jobs and len(linkedin_jobs) > 0:
+        for job in linkedin_jobs[:10]:  # Show only top 10 jobs
             job_link = job.get('link') or job.get('url') or job.get('jobUrl') or job.get('profileUrl') or ""
-            st.markdown(f"**{job.get('title')}** at *{job.get('companyName')}*")
-            st.markdown(f"-{job.get('location')}")
+            st.markdown(f"**{job.get('title', 'N/A')}** at *{job.get('companyName', 'N/A')}*")
+            st.markdown(f"-{job.get('location', 'N/A')}")
             if job_link:
                 st.markdown(f"-[View job]({job_link})")
             else:
+                st.markdown("-Job link not available")
+            st.markdown("---")
+    else:
+        st.warning("Unable to fetch LinkedIn jobs. Please check your Apify API token or try again later.")
+
+    st.markdown("---")
+    st.header("Top Naukri Jobs")
+
+    if naukri_jobs and len(naukri_jobs) > 0:
+        for job in naukri_jobs[:10]:  # Show only top 10 jobs
+            job_link = job.get('link') or job.get('url') or job.get('jobUrl') or job.get('profileUrl') or ""
+            st.markdown(f"**{job.get('title', 'N/A')}** at *{job.get('companyName', 'N/A')}*")
+            st.markdown(f"-{job.get('location', 'N/A')}")
+            if job_link:
+                st.markdown(f"-[View job]({job_link})")
+            else:
+                st.markdown("-Job link not available")
+            st.markdown("---")
+    else:
+        st.warning("Unable to fetch Naukri jobs. Please check your Apify API token or try again later.")
                 st.caption("(Link not available)")
             st.markdown("---")
     else:
