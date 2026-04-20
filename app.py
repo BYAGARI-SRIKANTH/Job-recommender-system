@@ -108,7 +108,7 @@ if uploaded_file:
 
     if naukri_jobs and len(naukri_jobs) > 0:
         for job in naukri_jobs[:10]:  # Show only top 10 jobs
-            job_link = job.get('link') or job.get('url') or job.get('jobUrl') or job.get('profileUrl') or ""
+            job_link = job.get('link') or job.get('url') or job.get('jobUrl') or job.get('jobLink') or ""
             st.markdown(f"**{job.get('title', 'N/A')}** at *{job.get('companyName', 'N/A')}*")
             st.markdown(f"-{job.get('location', 'N/A')}")
             if job_link:
@@ -117,22 +117,5 @@ if uploaded_file:
                 st.markdown("-Job link not available")
             st.markdown("---")
     else:
-        st.warning("Unable to fetch Naukri jobs. Please check your Apify API token or try again later.")
-                st.caption("(Link not available)")
-            st.markdown("---")
-    else:
-        st.warning("No LinkedIn jobs found.")
-        
-    st.markdown("---")
-    st.header("Top Naukri Jobs")
-    
-    if naukri_jobs:
-        for job in naukri_jobs:
-            job_link = job.get('url') or job.get('link') or job.get('jobUrl') or job.get('jobLink') or ""
-            st.markdown(f"**{job.get('title')}** at *{job.get('companyName')}*")
-            st.markdown(f"-{job.get('location')}")
-            if job_link:
-                st.markdown(f"-[View Job]({job_link})")
-            else:
-                st.caption("(Link not available)")
+        st.warning("No Naukri jobs found. Please check your Apify API token or try again later.")
     
