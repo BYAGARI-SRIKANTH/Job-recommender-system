@@ -3,3 +3,4 @@ openai
 pymupdf
 python-dotenv
 apify-client
+google-generativeai
